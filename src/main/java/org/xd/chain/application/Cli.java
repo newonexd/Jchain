@@ -1,13 +1,14 @@
 package org.xd.chain.application;
 
-
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.PosixParser;
+import org.apache.commons.codec.binary.Hex;
 import org.xd.chain.core.Blockchain;
+import org.xd.chain.wallet.Wallet;
 
 public class Cli {
     public static void Start(String[] args) {
@@ -23,6 +24,11 @@ public class Cli {
         opt = new Option("a", "add", true, "add block");
         opt.setRequired(false);
         options.addOption(opt);
+
+        opt = new Option("w", "wallet", false, "init wallet");
+        opt.setRequired(false);
+        options.addOption(opt);
+
 
         HelpFormatter hf = new HelpFormatter();
         hf.setWidth(110);
@@ -46,8 +52,14 @@ public class Cli {
                     if (name.equals("s") || name.equals("start")) {
                         System.out.println(Blockchain.getInstance().block.toString());
                     }
-                   if(name.equals("a")||name.equals("add")&&value!=""){
+                    if(name.equals("a")||name.equals("add")&&value!=""){
                         System.out.println(Blockchain.getInstance().addBlock(value).toString());
+                    } 
+                    if(name.equals("w")||name.equals("wallet")){
+                        Wallet wallet = Wallet.getInstance();
+                        System.out.println("private Key:  "+Hex.encodeHexString(wallet.getPrivateKey()));
+                        System.out.println();
+                        System.out.println("public Key:  "+Hex.encodeHexString(wallet.getPublicKey()));
                     } 
                 }
             }

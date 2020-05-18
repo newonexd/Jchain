@@ -9,6 +9,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.xd.chain.tools.Storage;
+import org.xd.chain.transaction.Transaction;
 import org.xd.chain.util.Util;
 
 import lombok.Getter;
@@ -30,10 +31,19 @@ public class Block implements Serializable{
     public String data;
     //产出该区块的难度
     public int nonce;
+    //当前区块中的交易
+    public Transaction transaction;
 
     public Block(int blkNum,String data, String prevBlockHash){
         this.blkNum = blkNum;
         this.data = data;
+        this.prevBlockHash = prevBlockHash;
+        this.timeStamp = Util.getTimeStamp();
+    }
+
+    public Block(int blkNum,Transaction transaction,String prevBlockHash){
+        this.blkNum = blkNum;
+        this.transaction = transaction;
         this.prevBlockHash = prevBlockHash;
         this.timeStamp = Util.getTimeStamp();
     }
