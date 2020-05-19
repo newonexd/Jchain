@@ -21,9 +21,12 @@ public class Cli {
         opt.setRequired(false);
         options.addOption(opt);
 
-        opt = new Option("a", "add", true, "add block");
+
+        opt = new Option("t", "transfer", true, "transfer coin");
         opt.setRequired(false);
         options.addOption(opt);
+
+
 
         opt = new Option("w", "wallet", false, "init wallet");
         opt.setRequired(false);
@@ -52,7 +55,7 @@ public class Cli {
                     if (name.equals("s") || name.equals("start")) {
                         System.out.println(Blockchain.getInstance().block.toString());
                     }
-                    if(name.equals("a")||name.equals("add")&&value!=""){
+                    if(name.equals("t")||name.equals("transfer")&&value!=""){
                         System.out.println(Blockchain.getInstance().addBlock(value).toString());
                     } 
                     if(name.equals("w")||name.equals("wallet")){

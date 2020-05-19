@@ -9,11 +9,9 @@ public class Test {
     public static void main(String[] args) throws NoSuchAlgorithmException, Exception {
         Blockchain.getInstance().addBlock(
             Transaction.newUTXO(
-                Wallet.getInstance().getAddress(), "address", 30))
-                .toString();
+                Wallet.getInstance().getAddress(), "address", 30));
         Blockchain.getInstance().addBlock(
             Transaction.newUTXO(
-                "address", "address1", 20))
-                .toString();
+                "address", "address1", 20));
     }
 }

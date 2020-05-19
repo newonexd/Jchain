@@ -19,10 +19,6 @@ public class TxInput implements Serializable{
     public TxInput(String txId, TxOutput top, Wallet wallet) throws Exception {
         //对引用的Txoutput中的地址进行签名，用于解锁引用的TxOutPut.
         this.unLockScript = wallet.sign(top.getLockScript());
-        //验证解锁脚本是否有效
-        // if(!wallet.verify(unLockScript)){
-        //     throw new Exception("解锁失败！！");
-        // }
         //记录引用的上一个交易ID
         this.preTxId = txId;
         //coin值等于引用的Txoutput的coin值

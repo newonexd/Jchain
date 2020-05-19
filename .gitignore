@@ -4,6 +4,7 @@
 # Log file
 *.log
 
+
 # BlueJ files
 *.ctxt
 
@@ -27,3 +28,6 @@ hs_err_pid*
 target
 *.block
 
+.classpath
+.factorypath
+.project

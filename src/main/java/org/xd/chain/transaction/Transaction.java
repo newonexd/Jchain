@@ -1,7 +1,6 @@
 package org.xd.chain.transaction;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
+
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -86,7 +85,6 @@ public class Transaction implements Serializable{
                 try {
                     t.tips.add(new TxInput(s, to, Wallet.getInstance()));
                 } catch (Exception e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             });
