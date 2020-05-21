@@ -60,7 +60,4 @@ public final class Util{
 	            (b[0] & 0xFF) << 24;
 	}
 
-    public static String getMerkleRoot(){
-        return null;
-    }
 }

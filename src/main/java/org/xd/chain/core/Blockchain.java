@@ -41,8 +41,7 @@ public final class Blockchain {
     }
 
     private Block CrtGenesisBlock() throws NoSuchAlgorithmException, Exception {
-        // Block block = new Block(1,"Genesis Block","00000000000000000");
-        Block block = new Block(1, Transaction.newCoinBase(), "00000000000000000");
+        Block block = new Block(1, null, "00000000000000000");
         block.setNonce(Pow.calc(block));
         // 计算区块哈希值
         String hash = Util.getSHA256(block.getBlkNum() + block.getData() + block.getPrevBlockHash()
@@ -51,30 +50,16 @@ public final class Blockchain {
         // 序列化
         Storage.Serialize(block);
         this.block = block;
-        // LOGGER.info(BC.block.get(0).toString());
+        LOGGER.info("Create Genesis block : \n"+block.toString());
         return this.block;
     }
 
-    public Block addBlock(String data) throws IOException {
-        int num = this.block.getBlkNum();
-        Block block = new Block(num + 1, data, this.block.curBlockHash);
-        // 每次将区块添加进区块链之前需要计算难度值
-        block.setNonce(Pow.calc(block));
-        // 计算区块哈希值
-        String hash = Util.getSHA256(block.getBlkNum() + block.getData() + block.getPrevBlockHash()
-                + block.getPrevBlockHash() + block.getNonce());
-        block.setCurBlockHash(hash);
-        // 序列化
-        Storage.Serialize(block);
-        this.block = block;
-        // LOGGER.info(block.toString());
-        return this.block;
-    }
 
-    public Block addBlock(Transaction tx) throws IOException {
+    public Block addBlock(Transaction tx) throws NoSuchAlgorithmException, Exception {
         int num = this.block.getBlkNum();
         Block block = new Block(num + 1, tx, this.block.curBlockHash);
         // 每次将区块添加进区块链之前需要计算难度值
+        LOGGER.info("Minning............");
         block.setNonce(Pow.calc(block));
         // 计算区块哈希值
         String hash = Util.getSHA256(block.getBlkNum() + block.getData() + block.getPrevBlockHash()
@@ -83,8 +68,28 @@ public final class Blockchain {
         // 序列化
         Storage.Serialize(block);
         this.block = block;
-        LOGGER.info("当前区块信息为:"+block.toString());
+        LOGGER.info("Minner a block : \n"+block.toString());
         return this.block;
+    }
+
+
+    public Block getBlockByBlkNum(int num) throws FileNotFoundException, ClassNotFoundException, IOException {
+        if(this.block.getBlkNum()<num){
+            LOGGER.info("Block "+num+"not exist!!");
+            return null;
+        }
+        Block block = Storage.Deserialize(num);
+        if(block==null){
+            LOGGER.info("Block "+num+"not exist!!");
+            return null;
+        }
+        if(this.block.getBlkNum()==num){
+            LOGGER.info("Block "+num+" information: \n"+this.block.toString());
+            return this.block;
+        }
+        LOGGER.info("Block "+num+" information: \n"+block.toString());
+        return block;
+
     }
 
     /**
@@ -117,14 +122,19 @@ public final class Blockchain {
         LOGGER.info("查找所有未消费的UTXO...............");
         HashMap<String, Transaction> txs = new HashMap<>();
         Block block = this.block;
-        Transaction tx;
+        //Transaction tx;
         // 从当前区块向前遍历查找UTXO txOutput
         do{
-            tx = block.getTransaction();
-            // 如果存在交易信息，且TxOutput地址包含address
-            if (tx != null && tx.getTops().containsKey(address)) {
-                txs.put(tx.getTxId(), tx);
-            }
+            block.getTransaction().forEach(tx->{
+                if (tx != null && tx.getTops().containsKey(address)) {
+                     txs.put(tx.getTxId(), tx);
+                }
+            });
+            // tx = block.getTransaction();
+            // // 如果存在交易信息，且TxOutput地址包含address
+            // if (tx != null && tx.getTops().containsKey(address)) {
+            //     txs.put(tx.getTxId(), tx);
+            // }
             block = block.getPrevBlock();
         }while(block!=null && block.hasPrevBlock()) ;
         // 创世区块
@@ -132,19 +142,33 @@ public final class Blockchain {
         // 再遍历一次查找已消费的UTXO
         block = this.block;
         do {
-            tx = block.getTransaction();
-            if (tx != null) {
-                // 如果交易中的TxInput包含的交易ID存在于txs，移除
-                tx.getTips().forEach(tip -> {
-                    try {
-                        if (Wallet.getInstance().verify(address,tip.unLockScript) 
-                                && txs.containsKey(tip.preTxId))
-                            txs.remove(tip.preTxId);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
-            }
+            block.getTransaction().forEach(tx->{
+                if (tx != null) {
+                    // 如果交易中的TxInput包含的交易ID存在于txs，移除
+                    tx.getTips().forEach(tip -> {
+                        try {
+                            if (Wallet.getInstance().verify(address,tip.unLockScript) 
+                                    && txs.containsKey(tip.preTxId))
+                                txs.remove(tip.preTxId);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    });
+                }
+            });
+            // tx = block.getTransaction();
+            // if (tx != null) {
+            //     // 如果交易中的TxInput包含的交易ID存在于txs，移除
+            //     tx.getTips().forEach(tip -> {
+            //         try {
+            //             if (Wallet.getInstance().verify(address,tip.unLockScript) 
+            //                     && txs.containsKey(tip.preTxId))
+            //                 txs.remove(tip.preTxId);
+            //         } catch (Exception e) {
+            //             e.printStackTrace();
+            //         }
+            //     });
+            // }
             block = block.getPrevBlock();
         }while (block!=null && block.hasPrevBlock());
         Transaction[] t = new Transaction[txs.size()];

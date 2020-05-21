@@ -7,11 +7,6 @@ import org.xd.chain.wallet.Wallet;
 
 public class Test {
     public static void main(String[] args) throws NoSuchAlgorithmException, Exception {
-        Blockchain.getInstance().addBlock(
-            Transaction.newUTXO(
-                Wallet.getInstance().getAddress(), "address", 30));
-        Blockchain.getInstance().addBlock(
-            Transaction.newUTXO(
-                "address", "address1", 20));
+        Blockchain.getInstance().getBlockByBlkNum(1);
     }
 }

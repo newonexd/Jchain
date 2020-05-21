@@ -5,21 +5,22 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.xd.chain.transaction.Transaction;
 import org.xd.chain.util.Util;
 
 public final class Merkle {
-    public static final String GetMerkleRoot(Set<String> data) throws NoSuchAlgorithmException {
+    public static final String GetMerkleRoot(ArrayList<Transaction> data) throws NoSuchAlgorithmException {
         if(data==null || data.size()==0){
             return "";
         }
         if(data.size()==1){
-            return Util.getSHA256((String)data.toArray()[0]);
+            return Util.getSHA256(data.get(0).toString());
         }
         
         ArrayList<String> al = new ArrayList<String>(data.size());
-        Iterator<String> it = data.iterator();
+        Iterator<Transaction> it = data.iterator();
         while(it.hasNext())
-            al.add(it.next());
+            al.add(Util.getSHA256(it.next().toString()));
         al = getNextList(al);
         return al.get(0);
     }

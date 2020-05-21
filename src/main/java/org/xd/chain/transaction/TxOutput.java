@@ -19,4 +19,12 @@ public class TxOutput implements Serializable{
         this.value = value;
         this.lockScript = address;
     }
+
+    @Override
+    public String toString(){
+        StringBuilder s = new StringBuilder();
+        s.append("         ").append("lockScript:  ").append(lockScript).append("\n");
+        s.append("         ").append("value:  ").append(value);
+        return s.toString();
+    }
 }

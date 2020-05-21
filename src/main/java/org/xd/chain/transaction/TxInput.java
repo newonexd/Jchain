@@ -24,4 +24,12 @@ public class TxInput implements Serializable{
         //coin值等于引用的Txoutput的coin值
         this.values = top.value;
     }
+    @Override
+    public String toString(){
+        StringBuilder s = new StringBuilder();
+        s.append("         PreTxId: "+preTxId).append("\n");
+        s.append("         ").append("unLockScript:  ").append(unLockScript).append("\n");
+        s.append("         ").append("values:  ").append(values);
+        return s.toString();
+    }
 }

@@ -1,6 +1,8 @@
 # Jchain
-a simple blockchain implement by java
+A simplified blockchain implement by java
+
 java实现的简易区块链
+
 已实现:
 
     * 钱包
@@ -12,7 +14,7 @@ java实现的简易区块链
 
     * 网络
 
-## 文档地址(更新中):[文档](https://www.cnblogs.com/cbkj-xd/category/1766558.html)
+## 文档地址(更新中):[文档](https://ifican.top/2020/05/19/blog/blockchain/Jchain1/)
 ### 目录结构:
     * application   
         * Cli           用于解析命令行与客户端交互

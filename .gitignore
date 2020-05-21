@@ -31,3 +31,5 @@ target
 .classpath
 .factorypath
 .project
+wallet.json
+*.log.*

@@ -4,12 +4,14 @@ package org.xd.chain.transaction;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 import com.alibaba.fastjson.JSONObject;
 
 import org.apache.log4j.Logger;
 import org.xd.chain.core.Blockchain;
+import org.xd.chain.util.Util;
 import org.xd.chain.wallet.Wallet;
 
 import lombok.Getter;
@@ -34,11 +36,16 @@ public class Transaction implements Serializable{
         this.tops = new HashMap<>(4);
     }
 
+    private void setTxId(){
+        this.txId = Util.getSHA256(this.toString());
+    }
+
 
     public static Transaction newCoinBase() throws NoSuchAlgorithmException, Exception {
         Transaction t = new Transaction();
         t.tips = new ArrayList<>();
         t.tops.put(Wallet.getInstance().getAddress(), new TxOutput(COINBASE, Wallet.getInstance().getAddress()));
+        t.setTxId();
         LOGGER.info("创建Coinbase....."+t.toString());
         return t;
     }
@@ -97,6 +104,7 @@ public class Transaction implements Serializable{
             //目的地址
             top = new TxOutput(value, toAddress);
             t.tops.put(top.getLockScript(), top);
+            t.setTxId();
             LOGGER.info("创建UTXO: "+t.toString());
             return t;
         }
@@ -106,6 +114,18 @@ public class Transaction implements Serializable{
 
     @Override
     public String toString(){
-        return JSONObject.toJSONString(this);
+        StringBuilder s = new StringBuilder();
+        s.append("      TransactionId: ").append(this.txId+"\n");
+        s.append("      UTXOInputs:   \n");
+        for(TxInput tip:tips){
+            s.append(tip).append("\n");
+        }
+        s.append("      UTXOOutputs:   \n");
+        Collection<TxOutput> toutps = tops.values();
+        for(TxOutput top:toutps){
+            s.append(top).append("\n");
+        }
+        return s.toString();
     }
+    
 }

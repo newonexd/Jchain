@@ -1,10 +1,12 @@
 package org.xd.chain.wallet;
 
+import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.log4j.Logger;
+import org.xd.chain.tools.Storage;
 import org.xd.chain.util.Util;
 
 import lombok.Getter;
@@ -12,9 +14,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Wallet {
-    private static final Logger LOGGER = Logger.getLogger(Wallet.class);
-    private static Wallet wallet;
+public class Wallet implements Serializable{
+    private transient static final Logger LOGGER = Logger.getLogger(Wallet.class);
+    private transient static Wallet wallet;
     private byte[] privateKey;
     private byte[] publicKey;
     private String address;
@@ -24,14 +26,14 @@ public class Wallet {
         this.privateKey = key.getPrivateKey();
         this.publicKey = key.getPublicKey();
         this.address = generateAddress();
+        Storage.SerializeWallet(this);
     }
 
     public static Wallet getInstance() throws Exception {
         if (wallet == null) {
-            synchronized (Wallet.class) {
-                if (wallet == null) {
-                    wallet = new Wallet();
-                }
+            wallet = Storage.DeserializeWallet();
+            if (wallet == null) {
+                wallet = new Wallet();
             }
         }
         return wallet;
@@ -43,7 +45,7 @@ public class Wallet {
      */
     private String generateAddress() throws NoSuchAlgorithmException {
         String pk = Hex.encodeHexString(this.publicKey);
-        this.address = "R" + Util.getSHA256(pk) + Util.getSHA256(Util.getSHA256(pk));
+        this.address = ("R" + Util.getSHA256(pk) + Util.getSHA256(Util.getSHA256(pk))).substring(0, 15);
         LOGGER.info("当前钱包地址为: "+this.address);
         return this.address;
 
