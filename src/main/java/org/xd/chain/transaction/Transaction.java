@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
-import com.alibaba.fastjson.JSONObject;
 
 import org.apache.log4j.Logger;
 import org.xd.chain.core.Blockchain;

@@ -1,10 +1,7 @@
 package org.xd.chain.tools;
 
 import java.io.*;
-import java.util.HashMap;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 
 import org.apache.log4j.Logger;
 import org.xd.chain.core.Block;

@@ -3,7 +3,6 @@ package org.xd.chain.tools;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Set;
 
 import org.xd.chain.transaction.Transaction;
 import org.xd.chain.util.Util;

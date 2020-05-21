@@ -15,6 +15,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Wallet implements Serializable{
+    /**
+     *
+     */
     private transient static final Logger LOGGER = Logger.getLogger(Wallet.class);
     private transient static Wallet wallet;
     private byte[] privateKey;
