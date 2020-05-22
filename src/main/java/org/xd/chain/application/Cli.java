@@ -3,26 +3,15 @@ package org.xd.chain.application;
 import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Option;
-import org.apache.commons.cli.OptionBuilder;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
-import org.apache.commons.cli.PosixParser;
+import org.apache.commons.cli.*;
 import org.apache.commons.codec.binary.Hex;
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
-import org.springframework.stereotype.Component;
 import org.xd.chain.core.Blockchain;
 import org.xd.chain.transaction.Transaction;
 import org.xd.chain.wallet.Wallet;
 
-@Component
-public class Cli implements ApplicationRunner {
+public class Cli{
 
-    private static Options define() {
+    public static Options define() {
         Option from = OptionBuilder.withLongOpt("from")
                 .withDescription("transfer from where")
                 .withArgName("fromAddress")
@@ -53,7 +42,7 @@ public class Cli implements ApplicationRunner {
         return options;
     }
 
-    private static CommandLine parser(Options options, String arg) {
+    public static CommandLine parser(Options options, String arg) {
         String[] args = arg.split(" ");
         HelpFormatter hf = new HelpFormatter();
         hf.setWidth(110);
@@ -75,7 +64,7 @@ public class Cli implements ApplicationRunner {
         return null;
     }
 
-    private static void excute(CommandLine commandLine) throws NoSuchAlgorithmException, Exception {
+    public static void excute(CommandLine commandLine) throws NoSuchAlgorithmException, Exception {
         if (commandLine.hasOption("s") || commandLine.hasOption("start")) {
             Blockchain.getInstance();
         }
@@ -102,21 +91,5 @@ public class Cli implements ApplicationRunner {
             Blockchain.getInstance().addBlock(Transaction.newUTXO(fromAddress, toAddress, num));
         }
 
-    }
-
-
-
-    @Override
-    public void run(ApplicationArguments args) throws Exception {
-        Scanner sc = new Scanner(System.in);
-        Options options = define();
-        CommandLine commandLine = null;
-        while(true){
-            if(sc.hasNextLine()){
-                commandLine = parser(options,sc.nextLine());
-                if(commandLine!=null) excute(commandLine);
-            }
-            commandLine = null;
-        }
     }
 }

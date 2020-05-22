@@ -33,3 +33,7 @@ target
 .project
 wallet.json
 *.log.*
+
+.editorconfig
+.gitattributes
+.travis.yml

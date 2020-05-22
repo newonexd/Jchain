@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.alibaba.fastjson.annotation.JSONField;
 
 import org.xd.chain.tools.Merkle;
 import org.xd.chain.tools.Storage;
@@ -63,7 +63,6 @@ public class Block implements Serializable {
     }
 
     @Transient
-    @JsonIgnore
     /**
      * 获取前一个区块
      */
