@@ -7,8 +7,6 @@ import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
-import com.alibaba.fastjson.annotation.JSONField;
-
 import org.xd.chain.tools.Merkle;
 import org.xd.chain.tools.Storage;
 import org.xd.chain.transaction.Transaction;
@@ -19,7 +17,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Block implements Serializable {
+public class Block implements Serializable{
     private static final long serialVersionUID = 1L;
     // 区块号
     public int blkNum;
