@@ -13,7 +13,7 @@ public class Pow {
         //nonce从0开始
         int nonce = 0;
         //将区块数据简单保存为字符串
-        String data = block.getBlkNum()+block.getData()+block.getPrevBlockHash()+block.getPrevBlockHash();
+        String data = block.getBlkNum()+block.getMerkleRoot()+block.getPrevBlockHash()+block.getPrevBlockHash();
         //如果nonce小于最大难度值
         while(nonce<MAX_VALUE){
             //计算哈希值

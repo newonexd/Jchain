@@ -24,7 +24,7 @@ public class TxOutput implements Serializable{
     public String toString(){
         StringBuilder s = new StringBuilder();
         s.append("         ").append("lockScript:  ").append(lockScript).append("\n");
-        s.append("         ").append("value:  ").append(value);
+        s.append("         ").append("value:  ").append(value).append("\n");
         return s.toString();
     }
 }

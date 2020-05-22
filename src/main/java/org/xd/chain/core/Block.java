@@ -29,8 +29,6 @@ public class Block implements Serializable {
     public String prevBlockHash;
     // 生成当前区块的时间，用时间戳表示
     public String timeStamp;
-    // 当前区块中的Transaction,使用字符串简单代替
-    public String data;
     // 产出该区块的难度
     public int nonce;
     // 当前区块中的交易

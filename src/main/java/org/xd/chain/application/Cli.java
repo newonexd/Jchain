@@ -25,19 +25,23 @@ public class Cli{
                 .hasArg()
                 .withArgName("value")
                 .create();
-        Option query = OptionBuilder.withLongOpt("query").withDescription("query block by number")
+        Option qblk = OptionBuilder.withLongOpt("queryblock").withDescription("query block by number")
                 .hasArg()
                 .withArgName("n")
                 .create();
+        Option qblc = OptionBuilder.withLongOpt("querybalance")
+        .withDescription("query balance")
+        .create();
         Options options = new Options();
         options.addOption("h", "help", false, "Print help");
-        options.addOption("s", "start", false, "start blockchain");
         options.addOption("w", "wallet", false, "get wallet information");
         options.addOption("t", "transfer", false, "transfer coin");
-        options.addOption(from);
+        // options.addOption("q","query",false,"query function");
+        // options.addOption(from);
         options.addOption(to);
         options.addOption(value);
-        options.addOption(query);
+        options.addOption(qblk);
+        options.addOption(qblc);
 
         return options;
     }
@@ -65,28 +69,28 @@ public class Cli{
     }
 
     public static void excute(CommandLine commandLine) throws NoSuchAlgorithmException, Exception {
-        if (commandLine.hasOption("s") || commandLine.hasOption("start")) {
-            Blockchain.getInstance();
-        }
-        if (commandLine.hasOption("query") ) {
-            int num = Integer.valueOf(commandLine.getOptionValue("query"));
-            if(num>=0){
-                Blockchain.getInstance().getBlockByBlkNum(num);
-            }
-        }
+        //if (commandLine.hasOption("q")) {
+            if(commandLine.hasOption("queryblock")){
+                int num = Integer.valueOf(commandLine.getOptionValue("queryblock"));
+                if(num>=0){
+                    Blockchain.getInstance().getBlockByBlkNum(num);
+                }
+            }else if(commandLine.hasOption("querybalance")){
+                Wallet.getInstance().getBalance();
+            }  
+        //}
         if (commandLine.hasOption("w") || commandLine.hasOption("wallet")) {
             Wallet wallet = Wallet.getInstance();
             System.out.println("private Key:  " + Hex.encodeHexString(wallet.getPrivateKey()));
             System.out.println();
             System.out.println("public Key:  " + Hex.encodeHexString(wallet.getPublicKey()));
+            System.out.println("balance:  "+wallet.getBalance());
         }
-        if (commandLine.hasOption("t") || commandLine.hasOption("transfer") && commandLine.hasOption("from")
-                && commandLine.hasOption("to") && commandLine.hasOption("value")) {
+        if ((commandLine.hasOption("t") || commandLine.hasOption("transfer"))
+                && (commandLine.hasOption("to") && commandLine.hasOption("value"))) {
             int num = Integer.valueOf(commandLine.getOptionValue("value"));
-            String fromAddress = commandLine.getOptionValue("from");
 
-            if (fromAddress == null)
-                fromAddress = Wallet.getInstance().getAddress();
+            String fromAddress = Wallet.getInstance().getAddress();
             String toAddress = commandLine.getOptionValue("to");
             Blockchain.getInstance().addBlock(Transaction.newUTXO(fromAddress, toAddress, num));
         }

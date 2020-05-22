@@ -36,7 +36,7 @@ public class Transaction implements Serializable{
     }
 
     private void setTxId(){
-        this.txId = Util.getSHA256(this.toString());
+        this.txId = Util.getSHA256(Util.getTimeStamp()+Util.getRandom()+this.toString());
     }
 
 
@@ -114,16 +114,22 @@ public class Transaction implements Serializable{
     @Override
     public String toString(){
         StringBuilder s = new StringBuilder();
+        s.append("   {").append("\n");
         s.append("      TransactionId: ").append(this.txId+"\n");
         s.append("      UTXOInputs:   \n");
+        s.append("      [").append("\n");
         for(TxInput tip:tips){
             s.append(tip).append("\n");
         }
+        s.append("      ]").append("\n");
         s.append("      UTXOOutputs:   \n");
+        s.append("      [").append("\n");
         Collection<TxOutput> toutps = tops.values();
         for(TxOutput top:toutps){
-            s.append(top).append("\n");
+            s.append(top);
         }
+        s.append("      ]").append("\n");
+        s.append("   }");
         return s.toString();
     }
     

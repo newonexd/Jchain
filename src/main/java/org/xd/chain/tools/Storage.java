@@ -17,7 +17,7 @@ public final class Storage {
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         
         oos.writeObject(block);
-        LOGGER.info("Serialize Block:"+block.toString());
+        //LOGGER.info("Serialize Block:"+block.toString());
         oos.close();
         fos.close();
     }
@@ -32,7 +32,7 @@ public final class Storage {
         ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
         
         Block block = (Block)ois.readObject();
-        LOGGER.info("Deserialize Block:"+block.toString());
+        //LOGGER.info("Deserialize Block:"+block.toString());
         ois.close();
         return block;
     }
