@@ -5,10 +5,10 @@ java实现的简易区块链
 
 ## 实现功能(Implemented function)
 
-* 查询区块(query block)
-* 查询钱包余额(query wallet balance)
-* 转账(Transfer balance)
-* 查看钱包密钥(query secret_Key)
+* ``查询区块(query block)``
+* ``查询钱包余额(query wallet balance)``
+* ``转账(Transfer balance)``
+* ``查看钱包密钥(query secret_Key)``
 
 ```
 usage: Jchain [-h] [--querybalance] [--queryblock <n>] [-t] [--to <toAddress>] [--value <value>] [-w]
@@ -32,7 +32,13 @@ usage: Jchain [-h] [--querybalance] [--queryblock <n>] [-t] [--to <toAddress>] [
     -w 
 ```
 
-## 启动方式
+## 启动方式(Set up)
+```
+#V1.0
+git clone https://github.com/newonexd/Jchain.git
+git checkout -b 1.0
+```
+
 ``App.java -> Function main``
 
 ## 文档地址(更新中):[文档](https://ifican.top/2020/05/19/blog/blockchain/Jchain1/)
