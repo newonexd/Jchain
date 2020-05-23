@@ -5,10 +5,10 @@ java实现的简易区块链
 
 ## 实现功能(Implemented function)
 
-* 查询区块(query block)
-* 查询钱包余额(query wallet balance)
-* 转账(Transfer balance)
-* 查看钱包密钥(query secret_Key)
+* ``查询区块(query block)``
+* ``查询钱包余额(query wallet balance)``
+* ``转账(Transfer balance)``
+* ``查看钱包密钥(query secret_Key)``
 
 ```
 usage: Jchain [-h] [--querybalance] [--queryblock <n>] [-t] [--to <toAddress>] [--value <value>] [-w]
