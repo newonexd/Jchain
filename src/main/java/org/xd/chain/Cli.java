@@ -1,10 +1,8 @@
 package org.xd.chain;
 
 import java.security.NoSuchAlgorithmException;
-import java.util.Scanner;
 
 import org.apache.commons.cli.*;
-import org.apache.commons.codec.binary.Hex;
 
 
 public class Cli{
