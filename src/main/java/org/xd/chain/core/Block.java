@@ -7,6 +7,8 @@ import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.xd.chain.attach.Merkle;
 import org.xd.chain.storage.Storage;
 import org.xd.chain.transaction.Transaction;
@@ -17,7 +19,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Block implements Serializable{
+public class Block extends Db implements Serializable{
+    @JsonIgnore
     private static final long serialVersionUID = 1L;
     // 区块号
     public int blkNum;
@@ -46,6 +49,8 @@ public class Block implements Serializable{
         this.prevBlockHash = prevBlockHash;
         this.timeStamp = Util.getTimeStamp();
         this.merkleRoot = Merkle.GetMerkleRoot(this.transaction);
+
+        this.id = String.valueOf(blkNum);
     }
 
        /**

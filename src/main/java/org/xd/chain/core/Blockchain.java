@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 import org.apache.log4j.Logger;
 import org.xd.chain.consensus.Pow;
-import org.xd.chain.storage.Storage;
+import org.xd.chain.storage.CouchDb;
 import org.xd.chain.transaction.Transaction;
 import org.xd.chain.util.Util;
 import org.xd.chain.wallet.Wallet;
@@ -50,7 +50,8 @@ public final class Blockchain {
                 + block.getPrevBlockHash() + block.getNonce());
         block.setCurBlockHash(hash);
         // 序列化
-        Storage.Serialize(block);
+        //Storage.Serialize(block);
+        CouchDb.save(block);
         this.block = block;
         LOGGER.info("创建创世区块 : \n"+block.toString());
         return this.block;
@@ -68,7 +69,8 @@ public final class Blockchain {
                 + block.getPrevBlockHash() + block.getNonce());
         block.setCurBlockHash(hash);
         // 序列化
-        Storage.Serialize(block);
+        //Storage.Serialize(block);
+        CouchDb.save(block);
         this.block = block;
         LOGGER.info("成功生成区块 : \n"+block.toString());
         return this.block;
@@ -80,7 +82,8 @@ public final class Blockchain {
             LOGGER.info("区块 "+num+" 不存在!!");
             return null;
         }
-        Block block = Storage.Deserialize(num);
+        // Block block = Storage.Deserialize(num);
+        Block block = CouchDb.getBlockBynum(num);
         if(block==null){
             LOGGER.info("区块 "+num+" 不存在!!");
             return null;
@@ -114,7 +117,8 @@ public final class Blockchain {
                     MaxFileNum = num;
             }
             LOGGER.info("当前最新的区块高度为:" + MaxFileNum);
-            return Storage.Deserialize(MaxFileNum);
+            // return Storage.Deserialize(MaxFileNum);
+            return CouchDb.getBlockBynum(MaxFileNum);
         }
         return null;
     }

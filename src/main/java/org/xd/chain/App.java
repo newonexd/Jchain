@@ -6,6 +6,8 @@ import java.util.Scanner;
 import org.apache.commons.cli.Options;
 import org.xd.chain.application.Cli;
 import org.xd.chain.core.Blockchain;
+import org.xd.chain.storage.CouchDb;
+import org.xd.chain.wallet.Wallet;
 
 
 /**
@@ -16,9 +18,11 @@ public final class App {
     }
 
     public static void main(String[] args) throws NoSuchAlgorithmException, Exception {
+        CouchDb.init();
+        Blockchain.getInstance();
+        Wallet.getInstance();
         Scanner sc = new Scanner(System.in);
         Options options = Cli.define();
-        Blockchain.getInstance();
         while(true){
             if(sc.hasNextLine()){
                 Cli.excute(Cli.parser(options, sc.nextLine()));

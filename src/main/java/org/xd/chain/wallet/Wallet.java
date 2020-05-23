@@ -8,7 +8,11 @@ import java.security.NoSuchAlgorithmException;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.log4j.Logger;
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonProperty;
+import org.ektorp.support.CouchDbDocument;
 import org.xd.chain.core.Blockchain;
+import org.xd.chain.storage.CouchDb;
 import org.xd.chain.storage.Storage;
 import org.xd.chain.transaction.Transaction;
 import org.xd.chain.transaction.TxOutput;
@@ -20,44 +24,52 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Wallet implements Serializable {
+public class Wallet extends CouchDbDocument implements Serializable{
     /**
      *
      */
+    @JsonIgnore
     private static final long serialVersionUID = -952556674509348700L;
     /**
      *
      */
-    private transient static final Logger LOGGER = Logger.getLogger(Wallet.class);
-    private transient static Wallet wallet;
+    @JsonIgnore
+    private static final Logger LOGGER = Logger.getLogger(Wallet.class);
+    private static Wallet wallet;
     private byte[] privateKey;
     private byte[] publicKey;
+
     private int balance;
+
     private String address;
 
-    private Wallet() throws Exception {
+    private Wallet(){
         RSAKey key = RSAKey.GenerateKeyPair();
         this.privateKey = key.getPrivateKey();
         this.publicKey = key.getPublicKey();
         this.address = generateAddress();
         this.balance = 0;
-        Storage.SerializeWallet(this);
+        this.setId("wallet");
     }
 
-    public static Wallet getInstance() throws Exception {
-        if (wallet == null) {
-            wallet = Storage.DeserializeWallet();
-            if (wallet == null) {
+    public static Wallet getInstance(){
+        if(wallet==null){
+            wallet = CouchDb.getWallet("wallet");
+            if(wallet==null){
                 wallet = new Wallet();
+                LOGGER.info("钱包信息:" +wallet.toString());
+                // Storage.SerializeWallet(this);
+                CouchDb.saveWallet(wallet);
+                return wallet;
             }
         }
-        return wallet;
+        return CouchDb.getWallet("wallet");
     }
 
     /**
      * 根据密钥生成地址
      */
-    private String generateAddress() throws NoSuchAlgorithmException {
+    private String generateAddress(){
         String pk = Hex.encodeHexString(this.publicKey);
         this.address = ("R" + Util.getSHA256(pk) + Util.getSHA256(Util.getSHA256(pk)));
         LOGGER.info("当前钱包地址为: " + this.address);
@@ -72,7 +84,7 @@ public class Wallet implements Serializable {
      * @throws NoSuchAlgorithmException
      */
     public String getAddress() throws NoSuchAlgorithmException {
-        if (this.address != "") {
+        if (!this.address.equals("")) {
             return this.address;
         }
         return this.generateAddress();
@@ -152,7 +164,8 @@ public class Wallet implements Serializable {
     }
 
 
-    public void setBalance()throws FileNotFoundException, ClassNotFoundException, NoSuchAlgorithmException, IOException, Exception {
+    
+    public void updateBalance()throws FileNotFoundException, ClassNotFoundException, NoSuchAlgorithmException, IOException, Exception {
         Transaction[] txs = Blockchain.getInstance().findAllUnspendableUTXO(getAddress());
         TxOutput top;
         int blc =0;
@@ -165,14 +178,16 @@ public class Wallet implements Serializable {
         }  
         if(this.balance!=blc){
             this.balance = blc;
-            Storage.SerializeWallet(this);
+            // Storage.SerializeWallet(this);
+            CouchDb.saveWallet(this);
         }
         
     }
 
-    public int getBalance()
+    
+    public int fetchBalance()
             throws FileNotFoundException, ClassNotFoundException, NoSuchAlgorithmException, IOException, Exception {
-        this.setBalance();
+        this.updateBalance();
         LOGGER.info("钱包余额为: "+ this.balance);
         return this.balance;
     }

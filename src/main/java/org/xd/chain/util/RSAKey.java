@@ -1,9 +1,6 @@
 package org.xd.chain.util;
 
-import java.security.KeyPairGenerator;
 import java.util.Map;
-
-
 
 import java.security.*;
 import java.security.interfaces.*;
@@ -18,21 +15,18 @@ import lombok.Setter;
 @Setter
 public final class RSAKey {
 
-     //非对称密钥算法
-     public static final String KEY_ALGORITHM = "RSA";
+    // 非对称密钥算法
+    public static final String KEY_ALGORITHM = "RSA";
 
+    /**
+     * 密钥长度必须是64的倍数，在512到65536位之间
+     */
+    private static final int KEY_SIZE = 512;
+    // 公钥
+    private static final String PUBLIC_KEY = "RSAPublicKey";
 
-     /**
-      * 密钥长度必须是64的倍数，在512到65536位之间
-      */
-     private static final int KEY_SIZE = 512;
-     //公钥
-     private static final String PUBLIC_KEY = "RSAPublicKey";
- 
-     //私钥
-     private static final String PRIVATE_KEY = "RSAPrivateKey";
-
-
+    // 私钥
+    private static final String PRIVATE_KEY = "RSAPrivateKey";
 
     private byte[] privateKey;
     private byte[] publicKey;
@@ -44,37 +38,42 @@ public final class RSAKey {
     /**
      * 生成密钥
      */
-    public static RSAKey GenerateKeyPair() throws Exception {
+    public static RSAKey GenerateKeyPair() {
         RSAKey key = new RSAKey();
         Map<String, Object> keyPair = key.initKey();
 
         Key pk = (Key) keyPair.get(PRIVATE_KEY);
         key.setPrivateKey(pk.getEncoded());
-        
-        pk = (Key)keyPair.get(PUBLIC_KEY);
+
+        pk = (Key) keyPair.get(PUBLIC_KEY);
         key.setPublicKey(pk.getEncoded());
 
         return key;
     }
 
- 
- 
-    private Map<String, Object> initKey() throws Exception {
-        //实例化密钥生成器
-        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(KEY_ALGORITHM);
-        //初始化密钥生成器
-        keyPairGenerator.initialize(KEY_SIZE);
-        //生成密钥对
-        KeyPair keyPair = keyPairGenerator.generateKeyPair();
-        //公钥
-        RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
-        //私钥
-        RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
-        //将密钥存储在map中
-        Map<String, Object> keyMap = new HashMap<String, Object>();
-        keyMap.put(PUBLIC_KEY, publicKey);
-        keyMap.put(PRIVATE_KEY, privateKey);
-        return keyMap;
+    private Map<String, Object> initKey() {
+        // 实例化密钥生成器
+        KeyPairGenerator keyPairGenerator;
+        try {
+            keyPairGenerator = KeyPairGenerator.getInstance(KEY_ALGORITHM);
+            //初始化密钥生成器
+            keyPairGenerator.initialize(KEY_SIZE);
+            //生成密钥对
+            KeyPair keyPair = keyPairGenerator.generateKeyPair();
+            //公钥
+            RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
+            //私钥
+            RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
+            //将密钥存储在map中
+            Map<String, Object> keyMap = new HashMap<String, Object>();
+            keyMap.put(PUBLIC_KEY, publicKey);
+            keyMap.put(PRIVATE_KEY, privateKey);
+            return keyMap;
+        } catch (NoSuchAlgorithmException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
  
     }
  
