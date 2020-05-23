@@ -1,10 +1,9 @@
-package org.xd.chain.attach;
+package org.xd.chain.util;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Set;
 
-import org.xd.chain.util.Util;
 
 public final class Bloom {
 

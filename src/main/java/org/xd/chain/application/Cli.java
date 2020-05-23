@@ -29,8 +29,8 @@ public class Cli{
                 .withArgName("n")
                 .create();
         Option qblc = OptionBuilder.withLongOpt("querybalance")
-        .withDescription("query balance")
-        .create();
+            .withDescription("query balance")
+            .create();
         Options options = new Options();
         options.addOption("h", "help", false, "Print help");
         options.addOption("w", "wallet", false, "get wallet information");
@@ -71,16 +71,15 @@ public class Cli{
     }
 
     public static void excute(CommandLine commandLine) throws NoSuchAlgorithmException, Exception {
-        //if (commandLine.hasOption("q")) {
             if(commandLine.hasOption("queryblock")){
                 int num = Integer.valueOf(commandLine.getOptionValue("queryblock"));
                 if(num>=0){
                     Blockchain.getInstance().getBlockByBlkNum(num);
                 }
             }else if(commandLine.hasOption("querybalance")){
-                Wallet.getInstance().getBalance();
+                Wallet.getInstance().fetchBalance();
             }  
-        //}
+        
         if (commandLine.hasOption("w") || commandLine.hasOption("wallet")) {
             System.out.println(Wallet.getInstance().toString());
         }

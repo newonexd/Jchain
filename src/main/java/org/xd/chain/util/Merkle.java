@@ -1,11 +1,10 @@
-package org.xd.chain.attach;
+package org.xd.chain.util;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.xd.chain.transaction.Transaction;
-import org.xd.chain.util.Util;
 
 
 

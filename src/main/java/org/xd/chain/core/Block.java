@@ -8,9 +8,9 @@ import java.util.ArrayList;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonProperty;
-import org.xd.chain.attach.Merkle;
 import org.xd.chain.storage.CouchDb;
 import org.xd.chain.transaction.Transaction;
+import org.xd.chain.util.Merkle;
 import org.xd.chain.util.Util;
 
 import lombok.Getter;

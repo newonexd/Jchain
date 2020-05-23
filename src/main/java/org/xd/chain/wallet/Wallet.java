@@ -40,23 +40,27 @@ public class Wallet{
     private String address;
 
     private Wallet(){
+
+    }
+    private Wallet CrtWallet(){
         RSAKey key = RSAKey.GenerateKeyPair();
         this.privateKey = key.getPrivateKey();
         this.publicKey = key.getPublicKey();
         this.address = generateAddress();
         this.balance = 0;
         this.setId("wallet");
+        return this;
     }
 
     public static Wallet getInstance(){
         if(wallet==null){
             wallet = CouchDb.getWallet("wallet");
             if(wallet==null){
-                wallet = new Wallet();
+                wallet = new Wallet().CrtWallet();
                 LOGGER.info("钱包信息:" +wallet.toString());
                 CouchDb.saveWallet(wallet);
-                return wallet;
             }
+            return wallet;
         }
         return CouchDb.getWallet("wallet");
     }
@@ -66,7 +70,7 @@ public class Wallet{
      */
     private String generateAddress(){
         String pk = Hex.encodeHexString(this.publicKey);
-        this.address = ("R" + Util.getSHA256(pk) + Util.getSHA256(Util.getSHA256(pk)));
+        this.address = "R" + Util.getSHA256(pk) + Util.getSHA256(Util.getSHA256(pk));
         LOGGER.info("当前钱包地址为: " + this.address);
         return this.address;
 
@@ -78,7 +82,8 @@ public class Wallet{
      * @return
      * @throws NoSuchAlgorithmException
      */
-    public String getAddress() throws NoSuchAlgorithmException {
+    
+    public String fetchAddress() throws NoSuchAlgorithmException {
         if (!this.address.equals("")) {
             return this.address;
         }
@@ -192,11 +197,8 @@ public class Wallet{
         sb.append("wallet information:").append("\n");
         sb.append("   privateKey:  ").append(Hex.encodeHexString(wallet.getPrivateKey())).append("\n");
         sb.append("   publicKey:    ").append(Hex.encodeHexString(wallet.getPublicKey())).append("\n");
-        try {
-            sb.append("   address:     ").append(wallet.getAddress()).append("\n");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
+        sb.append("   address:     ").append(wallet.getAddress()).append("\n");
+        
         return sb.toString();
     }
 }
