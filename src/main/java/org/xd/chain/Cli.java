@@ -1,13 +1,11 @@
-package org.xd.chain.application;
+package org.xd.chain;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 
 import org.apache.commons.cli.*;
 import org.apache.commons.codec.binary.Hex;
-import org.xd.chain.core.Blockchain;
-import org.xd.chain.transaction.Transaction;
-import org.xd.chain.wallet.Wallet;
+
 
 public class Cli{
 
@@ -55,15 +53,18 @@ public class Cli{
             CommandLine commandLine = parser.parse(options, args);
             if (commandLine.getOptions().length < 1) {
                 hf.printHelp("Jchain", options, true);
+                System.out.println("-------------------------------------");
             }
 
             if (commandLine.hasOption('h')) {
                 // 打印使用帮助
                 hf.printHelp("Jchain", options, true);
+                System.out.println("-------------------------------------");
             }
             return commandLine;
         } catch (ParseException e) {
             hf.printHelp("Jchain", options, true);
+            System.out.println("-------------------------------------");
         }
         return null;
     }
@@ -80,11 +81,7 @@ public class Cli{
             }  
         //}
         if (commandLine.hasOption("w") || commandLine.hasOption("wallet")) {
-            Wallet wallet = Wallet.getInstance();
-            System.out.println("private Key:  " + Hex.encodeHexString(wallet.getPrivateKey()));
-            System.out.println();
-            System.out.println("public Key:  " + Hex.encodeHexString(wallet.getPublicKey()));
-            System.out.println("balance:  "+wallet.getBalance());
+            System.out.println(Wallet.getInstance().toString());
         }
         if ((commandLine.hasOption("t") || commandLine.hasOption("transfer"))
                 && (commandLine.hasOption("to") && commandLine.hasOption("value"))) {

@@ -1,4 +1,4 @@
-package org.xd.chain.wallet;
+package org.xd.chain;
 
 import java.security.KeyPairGenerator;
 import java.util.Map;

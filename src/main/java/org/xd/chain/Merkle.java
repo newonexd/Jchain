@@ -1,11 +1,10 @@
-package org.xd.chain.tools;
+package org.xd.chain;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.xd.chain.transaction.Transaction;
-import org.xd.chain.util.Util;
+
 
 public final class Merkle {
     public static final String GetMerkleRoot(ArrayList<Transaction> data) throws NoSuchAlgorithmException {

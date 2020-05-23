@@ -1,4 +1,4 @@
-package org.xd.chain.transaction;
+package org.xd.chain;
 
 
 import java.io.Serializable;
@@ -9,9 +9,6 @@ import java.util.HashMap;
 
 
 import org.apache.log4j.Logger;
-import org.xd.chain.core.Blockchain;
-import org.xd.chain.util.Util;
-import org.xd.chain.wallet.Wallet;
 
 import lombok.Getter;
 import lombok.Setter;

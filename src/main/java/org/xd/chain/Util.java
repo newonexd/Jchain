@@ -1,4 +1,4 @@
-package org.xd.chain.util;
+package org.xd.chain;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

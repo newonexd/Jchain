@@ -1,11 +1,10 @@
-package org.xd.chain.tools;
+package org.xd.chain;
 
 import java.io.*;
 
 
 import org.apache.log4j.Logger;
-import org.xd.chain.core.Block;
-import org.xd.chain.wallet.Wallet;
+
 
 public final class Storage {
     private transient static final Logger LOGGER = Logger.getLogger(Storage.class);

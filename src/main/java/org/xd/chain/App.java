@@ -4,8 +4,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 
 import org.apache.commons.cli.Options;
-import org.xd.chain.application.Cli;
-import org.xd.chain.core.Blockchain;
+
 
 /**
  * Hello world!

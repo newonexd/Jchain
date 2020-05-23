@@ -1,8 +1,7 @@
-package org.xd.chain.transaction;
+package org.xd.chain;
 
 import java.io.Serializable;
 
-import org.xd.chain.wallet.Wallet;
 
 public class TxInput implements Serializable{
     /**

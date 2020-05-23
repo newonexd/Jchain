@@ -1,4 +1,4 @@
-package org.xd.chain.core;
+package org.xd.chain;
 
 import java.beans.Transient;
 import java.io.FileNotFoundException;
@@ -7,10 +7,6 @@ import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
-import org.xd.chain.tools.Merkle;
-import org.xd.chain.tools.Storage;
-import org.xd.chain.transaction.Transaction;
-import org.xd.chain.util.Util;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,6 +1,5 @@
-package org.xd.chain.core;
+package org.xd.chain;
 
-import org.xd.chain.util.Util;
 
 public class Pow {
     //固定的难度值

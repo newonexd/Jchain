@@ -1,4 +1,4 @@
-package org.xd.chain.wallet;
+package org.xd.chain;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -8,11 +8,7 @@ import java.security.NoSuchAlgorithmException;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.log4j.Logger;
-import org.xd.chain.core.Blockchain;
-import org.xd.chain.tools.Storage;
-import org.xd.chain.transaction.Transaction;
-import org.xd.chain.transaction.TxOutput;
-import org.xd.chain.util.Util;
+
 
 import lombok.Getter;
 import lombok.Setter;
@@ -174,6 +170,20 @@ public class Wallet implements Serializable {
         this.setBalance();
         LOGGER.info("钱包余额为: "+ this.balance);
         return this.balance;
+    }
+
+    @Override
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("wallet information:").append("\n");
+        sb.append("   privateKey:  ").append(Hex.encodeHexString(wallet.getPrivateKey())).append("\n");
+        sb.append("   publicKey:    ").append(Hex.encodeHexString(wallet.getPublicKey())).append("\n");
+        try {
+            sb.append("   address:     ").append(wallet.getAddress()).append("\n");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return sb.toString();
     }
 }
 

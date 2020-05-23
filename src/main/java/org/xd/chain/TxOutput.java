@@ -1,4 +1,4 @@
-package org.xd.chain.transaction;
+package org.xd.chain;
 
 import java.io.Serializable;
 
