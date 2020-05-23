@@ -1,9 +1,10 @@
-package org.xd.chain;
+package org.xd.chain.storage;
 
 import java.io.*;
 
-
 import org.apache.log4j.Logger;
+import org.xd.chain.core.Block;
+import org.xd.chain.wallet.Wallet;
 
 
 public final class Storage {

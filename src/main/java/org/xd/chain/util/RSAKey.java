@@ -1,4 +1,4 @@
-package org.xd.chain;
+package org.xd.chain.util;
 
 import java.security.KeyPairGenerator;
 import java.util.Map;

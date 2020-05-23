@@ -1,4 +1,4 @@
-package org.xd.chain;
+package org.xd.chain.core;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -7,6 +7,11 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
 import org.apache.log4j.Logger;
+import org.xd.chain.consensus.Pow;
+import org.xd.chain.storage.Storage;
+import org.xd.chain.transaction.Transaction;
+import org.xd.chain.util.Util;
+import org.xd.chain.wallet.Wallet;
 
 
 public final class Blockchain {

@@ -1,4 +1,4 @@
-package org.xd.chain;
+package org.xd.chain.wallet;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -8,7 +8,12 @@ import java.security.NoSuchAlgorithmException;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.log4j.Logger;
-
+import org.xd.chain.core.Blockchain;
+import org.xd.chain.storage.Storage;
+import org.xd.chain.transaction.Transaction;
+import org.xd.chain.transaction.TxOutput;
+import org.xd.chain.util.RSAKey;
+import org.xd.chain.util.Util;
 
 import lombok.Getter;
 import lombok.Setter;

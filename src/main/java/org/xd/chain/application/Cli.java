@@ -1,10 +1,13 @@
-package org.xd.chain;
+package org.xd.chain.application;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 
 import org.apache.commons.cli.*;
 import org.apache.commons.codec.binary.Hex;
+import org.xd.chain.core.Blockchain;
+import org.xd.chain.transaction.Transaction;
+import org.xd.chain.wallet.Wallet;
 
 
 public class Cli{
