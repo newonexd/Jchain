@@ -1,6 +1,7 @@
 package org.xd.chain.storage;
 
 import java.net.MalformedURLException;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.ektorp.CouchDbConnector;
@@ -32,10 +33,25 @@ public final class CouchDb {
     }
     public static Block getBlockBynum(int num){
         if(db.contains(String.valueOf(num))){
-            Block block = db.get(Block.class, String.valueOf(num));
+            Block block = (Block)db.get(Block.class, String.valueOf(num));
             return block;
         }
+        
         return null;
+    }
+
+    public static Block getLastBlock(){
+        List<String> list = db.getAllDocIds();
+        list.remove("wallet");
+        int maxNum =0;
+        int num = 0;
+        int length = list.size();
+        for(int i=0;i<length;i++){
+            num = Integer.valueOf(list.get(i));
+            if(maxNum<num)
+                maxNum = num;
+        }
+        return getBlockBynum(maxNum);
     }
 
     public static void saveWallet(Wallet wallet){
@@ -44,7 +60,7 @@ public final class CouchDb {
     }
     public static Wallet getWallet(String wallet){
         if(db.contains(wallet))
-            return db.get(Wallet.class,wallet);
+            return (Wallet)db.get(Wallet.class,wallet);
         return null;
     }
 

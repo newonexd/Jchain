@@ -3,14 +3,13 @@ package org.xd.chain.core;
 import java.beans.Transient;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.xd.chain.attach.Merkle;
-import org.xd.chain.storage.Storage;
+import org.xd.chain.storage.CouchDb;
 import org.xd.chain.transaction.Transaction;
 import org.xd.chain.util.Util;
 
@@ -19,9 +18,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Block extends Db implements Serializable{
-    @JsonIgnore
-    private static final long serialVersionUID = 1L;
+public class Block{
+
+    @JsonProperty("_id")
+    private String id;
+    @JsonProperty("_rev")
+    private String rev;
     // 区块号
     public int blkNum;
     // 当前区块哈希值
@@ -37,6 +39,7 @@ public class Block extends Db implements Serializable{
     // MerkleRoot
     public String merkleRoot;
 
+    private Block(){}
 
     public Block(int blkNum, Transaction transaction, String prevBlockHash) throws NoSuchAlgorithmException, Exception {
         this.blkNum = blkNum;
@@ -56,6 +59,7 @@ public class Block extends Db implements Serializable{
        /**
      * 是否存在前一个区块
      */
+    @JsonIgnore
     public boolean hasPrevBlock(){
         if(this.getBlkNum()!=1){
             return true;
@@ -63,13 +67,13 @@ public class Block extends Db implements Serializable{
         return false;
     }
 
-    @Transient
     /**
      * 获取前一个区块
      */
+    @JsonIgnore
     public Block getPrevBlock() throws FileNotFoundException, ClassNotFoundException, IOException {
         if(this.hasPrevBlock())
-            return Storage.Deserialize(this.getBlkNum()-1);
+            return CouchDb.getBlockBynum(this.getBlkNum()-1);
         return null;          
     }
 

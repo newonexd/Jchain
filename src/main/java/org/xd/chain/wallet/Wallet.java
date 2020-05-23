@@ -2,7 +2,6 @@ package org.xd.chain.wallet;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 
 import org.apache.commons.codec.DecoderException;
@@ -10,10 +9,8 @@ import org.apache.commons.codec.binary.Hex;
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonProperty;
-import org.ektorp.support.CouchDbDocument;
 import org.xd.chain.core.Blockchain;
 import org.xd.chain.storage.CouchDb;
-import org.xd.chain.storage.Storage;
 import org.xd.chain.transaction.Transaction;
 import org.xd.chain.transaction.TxOutput;
 import org.xd.chain.util.RSAKey;
@@ -24,17 +21,16 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Wallet extends CouchDbDocument implements Serializable{
-    /**
-     *
-     */
-    @JsonIgnore
-    private static final long serialVersionUID = -952556674509348700L;
-    /**
-     *
-     */
+public class Wallet{
+
+
+    @JsonProperty("_id")
+    private String id;
+    @JsonProperty("_rev")
+    private String rev;
     @JsonIgnore
     private static final Logger LOGGER = Logger.getLogger(Wallet.class);
+
     private static Wallet wallet;
     private byte[] privateKey;
     private byte[] publicKey;
@@ -58,7 +54,6 @@ public class Wallet extends CouchDbDocument implements Serializable{
             if(wallet==null){
                 wallet = new Wallet();
                 LOGGER.info("钱包信息:" +wallet.toString());
-                // Storage.SerializeWallet(this);
                 CouchDb.saveWallet(wallet);
                 return wallet;
             }
@@ -178,7 +173,6 @@ public class Wallet extends CouchDbDocument implements Serializable{
         }  
         if(this.balance!=blc){
             this.balance = blc;
-            // Storage.SerializeWallet(this);
             CouchDb.saveWallet(this);
         }
         

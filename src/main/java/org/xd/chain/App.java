@@ -14,9 +14,6 @@ import org.xd.chain.wallet.Wallet;
  * Hello world!
  */
 public final class App {
-    private App() {
-    }
-
     public static void main(String[] args) throws NoSuchAlgorithmException, Exception {
         CouchDb.init();
         Blockchain.getInstance();

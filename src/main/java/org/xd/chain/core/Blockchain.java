@@ -33,7 +33,7 @@ public final class Blockchain {
             }
         }
         if (BC.block == null) {
-            Block block = BC.getLastBlock();
+            Block block = CouchDb.getLastBlock();
             BC.block = block;
             if (block == null) {
                 BC.CrtGenesisBlock();
@@ -105,6 +105,7 @@ public final class Blockchain {
      * @throws ClassNotFoundException
      * @throws IOException
      */
+    @Deprecated
     public Block getLastBlock() throws FileNotFoundException, ClassNotFoundException, IOException {
         File file = new File("src/main/resources/blocks");
 
@@ -122,6 +123,8 @@ public final class Blockchain {
         }
         return null;
     }
+
+
 
     public Transaction[] findAllUnspendableUTXO(String address)
             throws FileNotFoundException, ClassNotFoundException, IOException {

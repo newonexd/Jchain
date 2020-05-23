@@ -7,6 +7,7 @@ import org.xd.chain.core.Block;
 import org.xd.chain.wallet.Wallet;
 
 
+@Deprecated
 public final class Storage {
     private transient static final Logger LOGGER = Logger.getLogger(Storage.class);
      //序列化区块信息

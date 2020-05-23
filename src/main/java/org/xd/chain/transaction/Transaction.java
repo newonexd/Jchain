@@ -1,6 +1,5 @@
 package org.xd.chain.transaction;
 
-import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,12 +15,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Transaction implements Serializable{
+public class Transaction{
     private transient static final Logger LOGGER = Logger.getLogger(Transaction.class);
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
+
     private transient static final int COINBASE = 50;
     public String txId;
     // 交易输入的集合
@@ -30,7 +26,6 @@ public class Transaction implements Serializable{
     public HashMap<String, TxOutput> tops;
 
     private Transaction() {
-        this.tops = new HashMap<>(4);
     }
 
     private void setTxId(){
@@ -41,6 +36,7 @@ public class Transaction implements Serializable{
     public static Transaction newCoinBase() throws NoSuchAlgorithmException, Exception {
         Transaction t = new Transaction();
         t.tips = new ArrayList<>();
+        t.tops = new  HashMap<>();
         t.tops.put(Wallet.getInstance().getAddress(), new TxOutput(COINBASE, Wallet.getInstance().getAddress()));
         t.setTxId();
         LOGGER.info("创建Coinbase....."+t.toString());
@@ -81,6 +77,7 @@ public class Transaction implements Serializable{
         if (maxValue >= value) {
             // 创建tx
             Transaction t = new Transaction();
+            t.tops = new HashMap<>();
             t.tips = new ArrayList<TxInput>(tops.size());
 
             // 遍历所有需要用到的Txoutput
