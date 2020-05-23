@@ -7,7 +7,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
 import org.apache.log4j.Logger;
-import org.xd.chain.consensus.Pow;
+import org.xd.chain.consensus.pow.Pow;
 import org.xd.chain.storage.CouchDb;
 import org.xd.chain.transaction.Transaction;
 import org.xd.chain.util.Util;
@@ -24,7 +24,7 @@ public final class Blockchain {
     private Blockchain() {
     }
 
-    public static Blockchain getInstance() throws NoSuchAlgorithmException, Exception {
+    public static Blockchain getInstance() {
         if (BC == null) {
             synchronized (Blockchain.class) {
                 if (BC == null) {
@@ -42,7 +42,7 @@ public final class Blockchain {
         return BC;
     }
 
-    private Block CrtGenesisBlock() throws NoSuchAlgorithmException, Exception {
+    private Block CrtGenesisBlock() {
         Block block = new Block(1, null, "00000000000000000");
         block.setNonce(Pow.calc(block));
         // 计算区块哈希值
@@ -58,7 +58,7 @@ public final class Blockchain {
     }
 
 
-    public Block addBlock(Transaction tx) throws NoSuchAlgorithmException, Exception {
+    public Block addBlock(Transaction tx){
         int num = this.block.getBlkNum();
         Block block = new Block(num + 1, tx, this.block.curBlockHash);
         // 每次将区块添加进区块链之前需要计算难度值
@@ -77,7 +77,7 @@ public final class Blockchain {
     }
 
 
-    public Block getBlockByBlkNum(int num) throws FileNotFoundException, ClassNotFoundException, IOException {
+    public Block getBlockByBlkNum(int num){
         if(this.block.getBlkNum()<num){
             LOGGER.info("区块 "+num+" 不存在!!");
             return null;
@@ -126,8 +126,7 @@ public final class Blockchain {
 
 
 
-    public Transaction[] findAllUnspendableUTXO(String address)
-            throws FileNotFoundException, ClassNotFoundException, IOException {
+    public Transaction[] findAllUnspendableUTXO(String address){
         LOGGER.info("查找所有未消费的UTXO...............");
         HashMap<String, Transaction> txs = new HashMap<>();
         Block block = this.block;

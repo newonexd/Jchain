@@ -9,12 +9,7 @@ import org.xd.chain.wallet.Wallet;
 
 
 public class Cli{
-
     public static Options define() {
-        Option from = OptionBuilder.withLongOpt("from")
-                .withDescription("transfer from where")
-                .withArgName("fromAddress")
-                .create();
         Option to = OptionBuilder.withLongOpt("to")
                 .withDescription("transfer to where")
                 .hasArg()
@@ -35,8 +30,6 @@ public class Cli{
         options.addOption("h", "help", false, "Print help");
         options.addOption("w", "wallet", false, "get wallet information");
         options.addOption("t", "transfer", false, "transfer coin");
-        // options.addOption("q","query",false,"query function");
-        // options.addOption(from);
         options.addOption(to);
         options.addOption(value);
         options.addOption(qblk);
@@ -70,7 +63,7 @@ public class Cli{
         return null;
     }
 
-    public static void excute(CommandLine commandLine) throws NoSuchAlgorithmException, Exception {
+    public static void excute(CommandLine commandLine){
             if(commandLine.hasOption("queryblock")){
                 int num = Integer.valueOf(commandLine.getOptionValue("queryblock"));
                 if(num>=0){

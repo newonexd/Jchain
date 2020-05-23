@@ -41,7 +41,7 @@ public class Block{
 
     private Block(){}
 
-    public Block(int blkNum, Transaction transaction, String prevBlockHash) throws NoSuchAlgorithmException, Exception {
+    public Block(int blkNum, Transaction transaction, String prevBlockHash){
         this.blkNum = blkNum;
         this.transaction = new ArrayList<>();
         
@@ -71,7 +71,7 @@ public class Block{
      * 获取前一个区块
      */
     @JsonIgnore
-    public Block getPrevBlock() throws FileNotFoundException, ClassNotFoundException, IOException {
+    public Block getPrevBlock(){
         if(this.hasPrevBlock())
             return CouchDb.getBlockBynum(this.getBlkNum()-1);
         return null;          

@@ -33,7 +33,7 @@ public class Transaction{
     }
 
 
-    public static Transaction newCoinBase() throws NoSuchAlgorithmException, Exception {
+    public static Transaction newCoinBase(){
         Transaction t = new Transaction();
         t.tips = new ArrayList<>();
         t.tops = new  HashMap<>();
@@ -43,8 +43,7 @@ public class Transaction{
         return t;
     }
 
-    public static Transaction newUTXO(String fromAddress, String toAddress, int value)
-            throws NoSuchAlgorithmException, Exception {
+    public static Transaction newUTXO(String fromAddress, String toAddress, int value){
         /**
          * 1.收集所有Txoutput的锁定脚本为from的UTXO 2.判断是否大于value 3.收集用到的Txoutput并创建对应的TxInput
          * 4.如果value不均等，则返回多余的value到原地址(TxOutput) 5.创建UTXO
@@ -52,7 +51,7 @@ public class Transaction{
         Transaction[] txs = Blockchain.getInstance().findAllUnspendableUTXO(fromAddress);
         if (txs.length == 0) {
             LOGGER.info("当前地址"+fromAddress+"没有未消费的UTXO！！！");
-            throw new Exception("当前地址"+fromAddress+"没有未消费的UTXO,交易失败！！！");
+            return null;
         }
         TxOutput top;
         // 记录需要使用的TxOutput
@@ -103,7 +102,7 @@ public class Transaction{
             return t;
         }
         LOGGER.info("当前地址余额不足!!,余额为"+maxValue);
-        throw new Exception("当前地址余额不足!!,余额为"+maxValue);
+        return null;
     }
 
     @Override

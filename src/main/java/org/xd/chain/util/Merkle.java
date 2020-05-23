@@ -9,7 +9,7 @@ import org.xd.chain.transaction.Transaction;
 
 
 public final class Merkle {
-    public static final String GetMerkleRoot(ArrayList<Transaction> data) throws NoSuchAlgorithmException {
+    public static final String GetMerkleRoot(ArrayList<Transaction> data){
         if(data==null || data.size()==0){
             return "";
         }
@@ -25,7 +25,7 @@ public final class Merkle {
         return al.get(0);
     }
 
-    private static final ArrayList<String> getNextList(ArrayList<String> data) throws NoSuchAlgorithmException {
+    private static final ArrayList<String> getNextList(ArrayList<String> data){
         int length = data.size();
         if(length==1)
             return data;

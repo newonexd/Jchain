@@ -16,14 +16,16 @@ public final class CouchDb {
     private static final Logger LOGGER = Logger.getLogger(CouchDb.class);
     private static CouchDbConnector db;
 
-    public static void init() throws MalformedURLException {
-        HttpClient httpClient = new StdHttpClient.Builder()
-                                .url("http://localhost:5984")
-                                .username("admin")
-                                .password("admin")
-                                .build();
-        CouchDbInstance dbInstance = new StdCouchDbInstance(httpClient);
-        db = dbInstance.createConnector("jchain", true);
+    public static void init(){
+        HttpClient httpClient;
+        try {
+            httpClient = new StdHttpClient.Builder().url("http://localhost:5984").username("admin").password("admin")
+                    .build();
+            CouchDbInstance dbInstance = new StdCouchDbInstance(httpClient);
+            db = dbInstance.createConnector("jchain", true);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }   
     public static void save(Block block){
         if(getBlockBynum(block.blkNum)==null){

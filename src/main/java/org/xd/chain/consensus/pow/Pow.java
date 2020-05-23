@@ -1,4 +1,4 @@
-package org.xd.chain.consensus;
+package org.xd.chain.consensus.pow;
 
 import org.xd.chain.core.Block;
 import org.xd.chain.util.Util;

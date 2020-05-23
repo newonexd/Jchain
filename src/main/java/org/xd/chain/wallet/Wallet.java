@@ -165,7 +165,7 @@ public class Wallet{
 
 
     
-    public void updateBalance()throws FileNotFoundException, ClassNotFoundException, NoSuchAlgorithmException, IOException, Exception {
+    public void updateBalance(){
         Transaction[] txs = Blockchain.getInstance().findAllUnspendableUTXO(getAddress());
         TxOutput top;
         int blc =0;
@@ -184,8 +184,7 @@ public class Wallet{
     }
 
     
-    public int fetchBalance()
-            throws FileNotFoundException, ClassNotFoundException, NoSuchAlgorithmException, IOException, Exception {
+    public int fetchBalance(){
         this.updateBalance();
         LOGGER.info("钱包余额为: "+ this.balance);
         return this.balance;
