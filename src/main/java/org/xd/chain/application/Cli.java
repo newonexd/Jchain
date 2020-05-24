@@ -1,6 +1,5 @@
 package org.xd.chain.application;
 
-import java.security.NoSuchAlgorithmException;
 
 import org.apache.commons.cli.*;
 import org.xd.chain.core.Blockchain;

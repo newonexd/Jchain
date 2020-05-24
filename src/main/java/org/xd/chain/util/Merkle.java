@@ -1,6 +1,5 @@
 package org.xd.chain.util;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Iterator;
 

@@ -1,7 +1,5 @@
 package org.xd.chain.wallet;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
 import org.apache.commons.codec.DecoderException;
