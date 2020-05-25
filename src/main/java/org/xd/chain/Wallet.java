@@ -36,7 +36,6 @@ public class Wallet implements Serializable {
         this.publicKey = key.getPublicKey();
         this.address = generateAddress();
         this.balance = 0;
-        Storage.SerializeWallet(this);
     }
 
     public static Wallet getInstance() throws Exception {
@@ -44,6 +43,7 @@ public class Wallet implements Serializable {
             wallet = Storage.DeserializeWallet();
             if (wallet == null) {
                 wallet = new Wallet();
+                Storage.SerializeWallet(wallet);
             }
         }
         return wallet;

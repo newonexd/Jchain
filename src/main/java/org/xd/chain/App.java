@@ -14,9 +14,11 @@ public final class App {
     }
 
     public static void main(String[] args) throws NoSuchAlgorithmException, Exception {
+        Wallet.getInstance();
+        Blockchain.getInstance();
+
         Scanner sc = new Scanner(System.in);
         Options options = Cli.define();
-        Blockchain.getInstance();
         while(true){
             if(sc.hasNextLine()){
                 Cli.excute(Cli.parser(options, sc.nextLine()));
