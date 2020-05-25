@@ -36,7 +36,11 @@ usage: Jchain [-h] [--querybalance] [--queryblock <n>] [-t] [--to <toAddress>] [
 ```
 #V1.0
 git clone https://github.com/newonexd/Jchain.git
+<<<<<<< HEAD
 git checkout  v1.0
+=======
+git checkout  1.0
+>>>>>>> e771e134671d59828667c48340df9270913d5376
 ```
 
 ``App.java -> Function main``

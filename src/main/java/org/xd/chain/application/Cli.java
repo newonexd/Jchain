@@ -1,10 +1,16 @@
 package org.xd.chain.application;
 
+<<<<<<< HEAD:src/main/java/org/xd/chain/application/Cli.java
 
 import org.apache.commons.cli.*;
 import org.xd.chain.core.Blockchain;
 import org.xd.chain.transaction.Transaction;
 import org.xd.chain.wallet.Wallet;
+=======
+import java.security.NoSuchAlgorithmException;
+
+import org.apache.commons.cli.*;
+>>>>>>> e771e134671d59828667c48340df9270913d5376:src/main/java/org/xd/chain/Cli.java
 
 
 public class Cli{
