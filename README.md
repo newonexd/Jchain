@@ -1,4 +1,7 @@
 # Jchain(version 1.0)
+![](https://img.shields.io/github/license/newonexd/Jchain) ![](https://img.shields.io/github/languages/code-size/newonexd/Jchain)
+
+
 A simplified blockchain implement by java
 
 java实现的简易区块链
