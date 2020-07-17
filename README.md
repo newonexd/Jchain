@@ -1,6 +1,8 @@
 # Jchain(version 1.0)
 A simplified blockchain implement by java
 
+
+[](https://img.shields.io/github/downloads/newonexd/Jchain/total)
 java实现的简易区块链
 
 ## 实现功能(Implemented function)
